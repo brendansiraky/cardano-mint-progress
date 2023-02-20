@@ -1,0 +1,32 @@
+.main {
+    
+    min-height: 100vh;
+    background: linear-gradient(cyan, #8C9CFF, #A58CFF);
+    position: relative;
+    display: flex;    
+    align-items: center;
+    justify-content: center;
+
+    &:after {
+        content: '';
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.2);
+        position: fixed;
+    }
+
+    .content {
+
+        z-index: 1;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h1 {
+            font-size: 6rem;
+        }
+
+    }
+
+}

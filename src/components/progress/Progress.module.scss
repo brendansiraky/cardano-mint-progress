@@ -1,0 +1,16 @@
+.wrapper {
+    
+    height: 50px;
+    width: 80vw;
+    border: 5px solid #ffff;
+    border-radius: 50px;
+    padding: 7px;
+
+    .progress {
+        background-color: #fff;
+        height: 100%;
+        border-radius: 50px;
+        transition: all 0.2s;
+    }
+
+}
