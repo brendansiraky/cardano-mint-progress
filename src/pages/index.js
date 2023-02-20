@@ -25,6 +25,10 @@ export default function Home() {
         setMinted(result)
     }
 
+    function getMintedPercentage() {
+        return ((minted / maxSupply) * 100).toFixed(2)
+    }
+
     return (
         <>
             <Head>
@@ -37,6 +41,7 @@ export default function Home() {
                 <div className={styles.content}>
                     <h2 className={inter.className}>YAYA IZENOBBY</h2>
                     <h1 className={inter.className}>{minted} / {maxSupply}</h1>
+                    <h2 className={inter.className}>{getMintedPercentage()}%</h2>
                     <Progress 
                         progress={minted} 
                         max={maxSupply}    
