@@ -1,13 +1,34 @@
-  /* * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-  }
-   */
-  html,
-  body {
-    max-width: 100vw;
-    overflow-x: hidden;
-    padding: 0;
-    margin: 0;
-  }
+@font-face {
+  font-family: 'Sledge-Rough';
+  src: url('../../assets/Sledge/Sledge-Rough.woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Sledge-Rough !important;
+  font-weight: normal;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 88px;
+}
+
+h2 {
+  font-size: 48px;
+}
+
+h3 {
+  font-size: 38px;
+}

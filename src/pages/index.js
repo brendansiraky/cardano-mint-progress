@@ -1,33 +1,52 @@
+import { useEffect, useState } from 'react' 
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
+import ReactCountdown from 'react-countdown'
 import styles from '@/styles/Landing.module.scss'
 import { Progress } from '@/components/progress/Progress'
-import { useEffect, useState } from 'react'
-
-const inter = Inter({ subsets: ['latin'] })
 
 const maxSupply = process.env.NEXT_PUBLIC_MAX_SUPPLY
 
+const EXCHANGE_RATE = 0.51
+const MINT_PRICE_ADA = 99
+const MINT_PRICE_AUD = MINT_PRICE_ADA * EXCHANGE_RATE
+
+const INTERVAL = 30000
+
 export default function Home() {
     const [minted, setMinted] = useState(0)
+    const [isLoading, setIsLoading] = useState(false);
+    const [countdownDate] = useState(Date.now() + INTERVAL)
 
     useEffect(() => {
-        fetchMinted()
         setInterval(async () => {
             fetchMinted()
-        }, 60000)
+        }, INTERVAL)
     }, [])
 
     async function fetchMinted() {
-        const response = await fetch(`/api/minted`)
-        const result = await response.json()
-        setMinted(result)
+        try {
+            setIsLoading(true)
+            const response = await fetch(`/api/minted`)
+            const result = await response.json()
+            setIsLoading(false)
+            setMinted(result)
+        } catch (error) {
+            setIsLoading(false)
+        }
     }
 
     function getMintedPercentage() {
         return ((minted / maxSupply) * 100).toFixed(2)
     }
+
+    function formatDollarFigure(number) {
+        return `$${new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(number)}`
+    }
+
+    function formatAdaFigure(number) {
+        return new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(number)
+    }
+
 
     return (
         <>
@@ -38,13 +57,27 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className={styles.main}>
-                <div className={styles.content}>
-                    <h2 className={inter.className}>YAYA IZENOBBY</h2>
-                    <h1 className={inter.className}>{minted} / {maxSupply}</h1>
-                    <h2 className={inter.className}>{getMintedPercentage()}%</h2>
-                    <Progress 
+                <div className={styles.contentWraper}>
+                    <h1>UNPHASED</h1>
+                    <Progress
                         progress={minted} 
                         max={maxSupply}    
+                    />
+                    <h2>{minted} / {maxSupply}</h2>
+                    <h2>{getMintedPercentage()}%</h2>
+                </div>
+                <div className={styles.imageWrapper} style={{ backgroundImage: `url(/human-sad.png)` }} />
+                <div className={styles.totalWrapper}>
+                    <h3>ADA: {formatAdaFigure(MINT_PRICE_ADA * minted)}</h3>
+                    <h3>AUD: {formatDollarFigure(MINT_PRICE_AUD * minted)}</h3>
+                    <ReactCountdown 
+                        date={countdownDate}
+                        renderer={(props) => {
+                            const { seconds } = props.formatted
+                            return (
+                                <h3>Refreshing: {isLoading.toString()}</h3>  
+                            )
+                        }}
                     />
                 </div>
             </main>
