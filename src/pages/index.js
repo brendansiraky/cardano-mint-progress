@@ -10,7 +10,7 @@ const EXCHANGE_RATE = 0.51
 const MINT_PRICE_ADA = 99
 const MINT_PRICE_AUD = MINT_PRICE_ADA * EXCHANGE_RATE
 
-const INTERVAL = 30000
+const INTERVAL = 20000
 
 export default function Home() {
     const [minted, setMinted] = useState(0)
@@ -46,7 +46,6 @@ export default function Home() {
     function formatAdaFigure(number) {
         return new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(number)
     }
-
 
     return (
         <>
