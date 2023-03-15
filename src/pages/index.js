@@ -47,6 +47,17 @@ export default function Home() {
         return new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(number)
     }
 
+    function getHumanUrl(minted) {
+        if (minted < 500) {
+            return '/human-sad.png'
+        }
+        if (minted < 1000 ) {
+            return '/human-neautral.png'
+        }
+
+        return '/human-happy.png'
+    }
+
     return (
         <>
             <Head>
@@ -65,7 +76,7 @@ export default function Home() {
                     <h2>{minted} / {maxSupply}</h2>
                     <h2>{getMintedPercentage()}%</h2>
                 </div>
-                <div className={styles.imageWrapper} style={{ backgroundImage: `url(/human-sad.png)` }} />
+                <div className={styles.imageWrapper} style={{ backgroundImage: `url(${getHumanUrl(minted)})` }} />
                 <div className={styles.totalWrapper}>
                     <h3>ADA: {formatAdaFigure(MINT_PRICE_ADA * minted)}</h3>
                     <h3>AUD: {formatDollarFigure(MINT_PRICE_AUD * minted)}</h3>
@@ -79,6 +90,9 @@ export default function Home() {
                         }}
                     />
                 </div>
+                {minted === maxSupply || minted > maxSupply && <div className={styles.success}>
+                    <h1>SUCCESS!!! YAYA IZANOBBY</h1>
+                </div>}
             </main>
         </>
     )
